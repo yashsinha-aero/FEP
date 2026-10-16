@@ -1,0 +1,258 @@
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.loading-overlay.success {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 78, 59, 0.15));
+  backdrop-filter: blur(12px);
+}
+
+.loading-content {
+  text-align: center;
+  animation: slideUp 0.4s ease-out;
+}
+
+/* Spinner Animation */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+.loading-text {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Success Checkmark Animation */
+.success-checkmark {
+  margin: 0 auto 30px;
+  width: 80px;
+  height: 80px;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.checkmark {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 3;
+  stroke: #10b981;
+  stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px #10b981;
+}
+
+.checkmark-circle {
+  stroke-dasharray: 166;
+  stroke-dashoffset: 166;
+  stroke-width: 3;
+  stroke-miterlimit: 10;
+  stroke: #10b981;
+  fill: rgba(16, 185, 129, 0.1);
+  animation: checkmark-circle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  stroke: #10b981;
+  stroke-width: 3;
+  animation: checkmark-check 0.3s 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-text {
+  color: #10b981;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  animation: fadeInUp 0.5s 0.3s ease-out backwards;
+}
+
+.redirect-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  margin: 0;
+  animation: fadeInUp 0.5s 0.5s ease-out backwards;
+}
+
+/* Form Disabled State */
+.auth-form input:disabled,
+.auth-form select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-form button:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===========================
+   FORMAL LOADING PALETTE
+=========================== */
+
+.loading-overlay {
+  background: rgba(16, 24, 40, 0.88);
+}
+
+.loading-overlay.success {
+  background: rgba(16, 24, 40, 0.88);
+}
+
+.spinner {
+  border-color: rgba(255, 255, 255, 0.16);
+  border-top-color: var(--app-surface);
+}
+
+.checkmark,
+.checkmark-circle,
+.checkmark-check {
+  stroke: var(--app-surface);
+}
+
+.checkmark {
+  box-shadow: inset 0 0 0 var(--app-surface);
+}
+
+.checkmark-circle {
+  fill: rgba(255, 255, 255, 0.08);
+}
+
+.success-text,
+.loading-text {
+  color: var(--app-surface);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes checkmark-circle {
+  0% {
+    stroke-dashoffset: 166;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes checkmark-check {
+  0% {
+    stroke-dashoffset: 48;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .loading-text {
+    font-size: 16px;
+  }
+
+  .success-checkmark {
+    width: 70px;
+    height: 70px;
+  }
+
+  .checkmark {
+    width: 70px;
+    height: 70px;
+  }
+
+  .success-text {
+    font-size: 20px;
+  }
+
+  .redirect-text {
+    font-size: 13px;
+  }
+}

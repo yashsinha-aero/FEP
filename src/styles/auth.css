@@ -1,0 +1,648 @@
+/* Core Layout */
+.fep-layout {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  background: linear-gradient(135deg, #0D203A 0%, #183B66 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Header */
+.fep-header {
+  width: 100%;
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+}
+
+.fep-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fep-header-icon {
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.fep-header-title {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.fep-header-right {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Main Area & Centering */
+.fep-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  z-index: 10;
+}
+
+/* The Glass Card */
+.fep-auth-card { 
+  background: rgba(255, 255, 255, 0.96); 
+  backdrop-filter: blur(24px); 
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 20px 50px rgba(9, 20, 36, 0.4);
+  width: 100%;
+  max-width: 400px;
+  border-radius: 24px;
+  padding: 38px;
+  box-sizing: border-box;
+}
+
+.fep-card-icon {
+  width: 44px;
+  height: 44px;
+  background-color: #F4F7F9;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+  border: 1px solid #E5E7EB;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.fep-card-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: #111827;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.fep-card-subtitle {
+  font-size: 12px;
+  text-align: center;
+  color: #9CA3AF;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fep-error-msg {
+  color: #EF4444;
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: 600;
+  background-color: #FEF2F2;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #FEE2E2;
+}
+
+/* Forms & Inputs */
+.fep-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fep-password-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fep-input { 
+  width: 100%; 
+  padding: 13px 16px; 
+  border-radius: 12px; 
+  background-color: #F4F7F9; 
+  border: 1px solid #E5E7EB; 
+  color: #111827;
+  font-size: 15px;
+  transition: all 0.2s ease; 
+  box-sizing: border-box;
+}
+
+.fep-input:focus { 
+  outline: none; 
+  border-color: #112A46; 
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(17, 42, 70, 0.08); 
+}
+
+/* Make dropdown select fields match text inputs in height and design */
+select.fep-input {
+  height: 48px;
+  padding: 0 40px 0 16px; /* Avoid overlapping text with the custom arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+select.fep-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.fep-forgot-link-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fep-forgot-link {
+  background: none;
+  border: none;
+  font-size: 11px;
+  font-weight: 500;
+  color: #9CA3AF;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.fep-forgot-link:hover {
+  color: #112A46;
+}
+
+/* Buttons */
+.fep-btn-primary {
+  width: 100%;
+  padding: 13px;
+  background-color: #112A46;
+  color: #FFFFFF;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.fep-btn-primary:hover:not(:disabled) { 
+  background-color: #183B66; 
+  transform: translateY(-1px); 
+}
+
+.fep-signup-prompt {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #6B7280;
+}
+
+.fep-signup-link {
+  background: none;
+  border: none;
+  color: #112A46;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.fep-signup-link:hover {
+  text-decoration: underline;
+}
+
+/* Integrated Footer inside Card */
+.fep-card-footer {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fep-footer-org {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.fep-logo-group {
+  display: flex;
+  gap: 4px;
+}
+
+.fep-logo-img {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #E5E7EB;
+  object-fit: contain;
+  padding: 2px;
+}
+
+.fep-org-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.fep-org-text strong {
+  font-size: 11px;
+  color: #1F2937;
+  line-height: 1.2;
+}
+
+.fep-org-text span {
+  font-size: 9px;
+  color: #6B7280;
+  line-height: 1.2;
+}
+
+.fep-footer-contact {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.fep-footer-contact span {
+  font-size: 9px;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.fep-footer-contact a {
+  font-size: 11px;
+  font-weight: bold;
+  color: #112A46;
+  text-decoration: none;
+}
+
+.fep-footer-contact a:hover {
+  text-decoration: underline;
+}
+/* --- ROLE TOGGLE (Modern segmented control) --- */
+.fep-role-toggle {
+  display: flex;
+  background-color: #F4F7F9;
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #E5E7EB;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.fep-role-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fep-role-btn:hover:not(.active) {
+  color: #111827;
+}
+
+.fep-role-btn.active {
+  background-color: #112A46;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(17, 42, 70, 0.2);
+}
+
+/* --- SCROLLABLE FORM AREA --- */
+.fep-scrollable-form {
+  max-height: none;
+  overflow-y: visible;
+  padding-right: 0;
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Custom Webkit Scrollbar for form */
+.fep-scrollable-form::-webkit-scrollbar {
+  width: 5px;
+}
+
+.fep-scrollable-form::-webkit-scrollbar-track {
+  background: #F3F4F6;
+  border-radius: 4px;
+}
+
+.fep-scrollable-form::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+.fep-scrollable-form::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Reset margin for inputs inside scrollable area to rely on flex gap */
+.fep-scrollable-form .fep-input {
+  margin-bottom: 0;
+}
+
+/* --- INTEREST CHIPS FOR PROFESSOR --- */
+.fep-interest-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.fep-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.fep-chip {
+  background-color: #E2E8F0;
+  color: #1E293B;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fep-chip-remove {
+  background: none;
+  border: none;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  color: #64748B;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.fep-chip-remove:hover {
+  color: #EF4444;
+}
+/* --- 1. NEW: Top Header Logo Wrapper --- */
+.fep-header-logo-wrapper {
+  width: clamp(44px, 6vw, 56px); /* Scales dynamically between 44px and 56px */
+  height: clamp(44px, 6vw, 56px);
+  background-color: #FFFFFF; /* Forces the white background */
+  border-radius: 8px; 
+  padding: 6px; /* Adds breathing room inside the white box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow against the dark blue */
+}
+
+.fep-header-logo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- 2. UPDATED: Center Card Top Logo --- */
+.fep-card-icon {
+  width: 64px; /* Increased from 44px to make it prominent */
+  height: 64px;
+  background-color: #FFFFFF !important; /* Ensures it stays white */
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px auto;
+  border: 1px solid #E5E7EB !important;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05) !important;
+  padding: 8px; /* Breathing room for the image */
+}
+
+/* --- 3. UPDATED: Card Footer Logos --- */
+.fep-logo-img {
+  width: clamp(42px, 5vw, 52px); /* Increased from 32px */
+  height: clamp(42px, 5vw, 52px);
+  background-color: #FFFFFF;
+  border-radius: 6px;
+  border: 1px solid #E5E7EB;
+  object-fit: contain;
+  padding: 6px; /* Gives the black logos space away from the borders */
+}
+.fep-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px; /* Reduced vertical padding to prevent scrolling */
+  position: relative;
+  z-index: 10;
+}
+.fep-header {
+  width: 100%;
+  padding: 12px 32px; /* Reduced top and bottom padding from 24px to 12px */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  box-sizing: border-box;
+}
+/* Media Query for smaller screens */
+@media (max-width: 640px) {
+  .fep-header-title { display: none; }
+}
+
+/* --- Form Field Error Styling --- */
+@keyframes showError {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fep-field-error-text {
+  color: #EF4444;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: showError 0.2s ease-out forwards;
+  text-align: left;
+}
+
+.fep-input-error {
+  border-color: #EF4444 !important;
+  background-color: #FEF2F2 !important;
+}
+
+.fep-input-error:focus {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* --- Stepper CSS --- */
+.fep-stepper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.fep-step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+}
+
+.fep-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #F4F7F9;
+  border: 2px solid #E5E7EB;
+  color: #9CA3AF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.fep-step-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #9CA3AF;
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  transition: all 0.3s ease;
+}
+
+.fep-step-line {
+  flex: 1;
+  height: 2px;
+  background-color: #E5E7EB;
+  margin: 0 12px;
+  transform: translateY(-8px);
+  transition: all 0.3s ease;
+}
+
+/* Stepper Active / Completed States */
+.fep-step-node.active .fep-step-number {
+  border-color: #112A46;
+  background-color: #112A46;
+  color: #FFFFFF;
+  box-shadow: 0 4px 10px rgba(17, 42, 70, 0.2);
+}
+
+.fep-step-node.active .fep-step-label {
+  color: #112A46;
+}
+
+.fep-step-line.active {
+  background-color: #112A46;
+}
+
+/* Nav Button Layout */
+.fep-step-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.fep-btn-secondary {
+  flex: 1;
+  padding: 13px;
+  background-color: transparent;
+  color: #112A46;
+  border: 1px solid #112A46;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.fep-btn-secondary:hover:not(:disabled) {
+  background-color: rgba(17, 42, 70, 0.04);
+}
+
+.fep-btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Transition for switching steps */
+.step-fade-in {
+  animation: stepFadeIn 0.25s ease-out forwards;
+}
+
+@keyframes stepFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

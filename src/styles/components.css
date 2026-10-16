@@ -1,0 +1,244 @@
+/* ===========================
+   SHARED UI PRIMITIVES
+=========================== */
+
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-success,
+.btn-link {
+  padding: 8px 16px;
+  border-radius: var(--app-radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.4;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--app-primary);
+  color: var(--app-surface);
+  border: 1px solid var(--app-primary);
+  box-shadow: 0 1px 2px rgba(13, 27, 42, 0.08);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--app-primary-hover);
+  border-color: var(--app-primary-hover);
+  box-shadow: 0 4px 12px rgba(18, 53, 91, 0.2);
+}
+
+.btn-primary:disabled {
+  background: var(--app-border);
+  border-color: var(--app-border);
+  color: var(--app-muted);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--app-surface);
+  color: var(--app-ink);
+  border: 1px solid var(--app-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--app-surface-muted);
+  border-color: var(--app-border-strong);
+}
+
+.btn-danger {
+  background: #c5192d;
+  color: var(--app-surface);
+  border: 1px solid #c5192d;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #a01424;
+  border-color: #a01424;
+}
+
+.btn-success {
+  background: #027a48;
+  color: var(--app-surface);
+  border: 1px solid #027a48;
+}
+
+.btn-success:hover:not(:disabled) {
+  background: #02643a;
+  border-color: #02643a;
+}
+
+.btn-link {
+  background: transparent;
+  color: var(--app-primary);
+  border: none;
+  padding: 4px 8px;
+}
+
+.btn-link:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.status-badge.status-open,
+.status-open {
+  background: var(--badge-open-bg);
+  color: var(--badge-open-text);
+  border-color: var(--badge-open-border);
+}
+
+.status-badge.status-closed,
+.status-closed {
+  background: var(--badge-closed-bg);
+  color: var(--badge-closed-text);
+  border-color: var(--badge-closed-border);
+}
+
+.status-badge.status-pending,
+.status-pending {
+  background: var(--badge-pending-bg);
+  color: var(--badge-pending-text);
+  border-color: var(--badge-pending-border);
+}
+
+.status-badge.status-approved,
+.status-approved {
+  background: var(--badge-open-bg);
+  color: var(--badge-open-text);
+  border-color: var(--badge-open-border);
+}
+
+.status-badge.status-rejected,
+.status-rejected {
+  background: #fef3f2;
+  color: #b42318;
+  border-color: #fecdca;
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--app-surface-muted);
+  color: var(--app-muted);
+  border: 1px solid var(--app-border);
+}
+
+.k-card {
+  background: var(--app-surface);
+  border: var(--app-card-border);
+  border-radius: var(--app-radius-md);
+  padding: 20px 24px;
+  box-shadow: var(--app-shadow-soft);
+}
+
+.k-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.k-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--app-radius-sm);
+  font-size: 12px;
+  color: var(--app-muted);
+  background: var(--app-surface-muted);
+  border: 1px solid var(--app-border);
+}
+
+.k-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--app-primary);
+  background: rgba(18, 53, 91, 0.08);
+  border: 1px solid rgba(18, 53, 91, 0.15);
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--app-muted);
+  padding: 32px 16px;
+  font-size: 14px;
+}
+
+.empty-state-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 200px;
+  color: var(--app-muted);
+  font-size: 15px;
+  text-align: center;
+  background: var(--app-surface-muted);
+  border: 1px dashed var(--app-border);
+  border-radius: var(--app-radius-md);
+  padding: 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--app-ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-header h1,
+.page-header h2,
+.page-header h3 {
+  margin: 0 0 6px;
+  font-weight: 600;
+  color: var(--app-ink);
+}
+
+.page-header p {
+  margin: 0;
+  color: var(--app-muted);
+  font-size: 14px;
+}

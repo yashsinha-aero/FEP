@@ -1,0 +1,33 @@
+name: Professor Application Digest
+
+on:
+  # Runs every 4 days at midnight UTC
+  # This triggers on days 1, 5, 9, 13, 17, 21, 25, 29 → ~7-8 runs/month (~8 mins/month)
+  schedule:
+    - cron: "0 0 */4 * *"
+
+  # Allow manual trigger from the GitHub Actions UI for testing
+  workflow_dispatch:
+
+jobs:
+  send-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Trigger Professor Digest
+        run: |
+          HTTP_STATUS=$(curl -s -o /tmp/response.json -w "%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer ${{ secrets.DIGEST_SECRET }}" \
+            -H "Content-Type: application/json" \
+            https://us-central1-fep-iitk.cloudfunctions.net/api/send-professor-digest)
+
+          echo "HTTP Status: $HTTP_STATUS"
+          echo "Response:"
+          cat /tmp/response.json
+
+          if [ "$HTTP_STATUS" -ne 200 ]; then
+            echo "Digest request failed with status $HTTP_STATUS"
+            exit 1
+          fi

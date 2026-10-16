@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--app-bg);
+  color: var(--app-ink);
+}
+
+:root {
+  --app-bg: #f0f4f8;
+  --app-surface: #ffffff;
+  --app-surface-muted: #f6f9fc;
+  --app-ink: #0d1b2a;
+  --app-muted: #5a6b7d;
+  --app-primary: #12355b;
+  --app-primary-hover: #0b2745;
+  --app-accent: #20beff;
+  --app-accent-hover: #1aabeb;
+  --app-border: #dce3eb;
+  --app-border-strong: #9aa8b8;
+  --app-shadow: 0 8px 24px rgba(13, 27, 42, 0.1);
+  --app-shadow-soft: 0 2px 8px rgba(13, 27, 42, 0.06);
+  --app-focus: 0 0 0 3px rgba(32, 190, 255, 0.25);
+  --app-radius-sm: 6px;
+  --app-radius-md: 10px;
+  --app-radius-lg: 14px;
+  --app-nav-height: 56px;
+  --app-content-max: 1280px;
+  --app-card-border: 1px solid var(--app-border);
+  --badge-open-bg: #ecfdf3;
+  --badge-open-text: #027a48;
+  --badge-open-border: #abefc6;
+  --badge-closed-bg: #f2f4f7;
+  --badge-closed-text: #344054;
+  --badge-closed-border: #d0d5dd;
+  --badge-pending-bg: #fffaeb;
+  --badge-pending-text: #b54708;
+  --badge-pending-border: #fedf89;
+  --badge-muted-bg: #f2f4f7;
+  --badge-muted-text: #667085;
+  --badge-muted-border: #d0d5dd;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

@@ -1,0 +1,203 @@
+/* =========================
+   NAVBAR
+========================= */
+
+.auth-nav-tagline span {
+  font-size: 13px;
+  color: var(--app-muted);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .auth-nav-tagline {
+    display: none;
+  }
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-left h1 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: var(--app-ink);
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.logo-link:hover .navbar-logo {
+  opacity: 0.85;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-button {
+  padding: 8px 16px;
+  background: transparent;
+  text-decoration: none;
+  color: var(--app-ink);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid transparent;
+}
+
+.nav-button:hover {
+  background: var(--app-surface-muted);
+  color: var(--app-ink);
+}
+
+.nav-button-primary {
+  background: var(--app-primary);
+  color: var(--app-surface);
+  border-color: var(--app-primary);
+}
+
+.nav-button-primary:hover {
+  background: var(--app-primary-hover);
+  border-color: var(--app-primary-hover);
+  color: var(--app-surface);
+}
+
+.layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-content {
+  flex: 1;
+  display: flex;
+}
+
+/* =========================
+   FOOTER (OLD SETUP)
+========================= */
+
+.footer {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-slim {
+  background: var(--app-surface);
+  border-top: 1px solid var(--app-border);
+  color: var(--app-muted);
+  padding: 20px 24px;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 32px;
+}
+
+.footer-column {
+  max-width: 400px;
+}
+
+.footer-column h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.footer-column p {
+  margin: 4px 0;
+  font-size: 13px;
+  color: #c9d1dc;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .navbar,
+  .dashboard-nav {
+    padding: 0 16px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer {
+    padding: 24px 16px;
+  }
+}
+
+/* ===================================================
+   REVAMPED LOW-PROFILE WHITE GLOBAL FOOTER SYSTEM
+=================================================== */
+
+.app-shell-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.app-shell-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.app-shell-content {
+  flex: 1 0 auto;
+  padding-bottom: 24px;
+}
+
+/* ===================================================
+   REVAMPED LOW-PROFILE GLOBAL FOOTER SYSTEM
+   (Styled primarily via Tailwind CSS in components/Footer.js)
+=================================================== */
+
+.app-shell-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+.app-shell-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.app-shell-content {
+  flex: 1 0 auto;
+  padding-bottom: 24px;
+}

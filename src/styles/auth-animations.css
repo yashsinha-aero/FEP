@@ -1,0 +1,134 @@
+/* --- 1. REVOLVING ORBITS --- */
+.orbit-system { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 1000px; 
+    height: 1000px; 
+    z-index: 1; 
+    pointer-events: none; 
+    opacity: 0.15; 
+}
+.orbit-ring { 
+    position: absolute; 
+    inset: 0; 
+    border: 1px dashed rgba(255, 255, 255, 0.4); 
+    border-radius: 50%; 
+    animation: spin continuous linear infinite; 
+}
+.orbit-1 { transform: scale(0.4); animation-duration: 40s; }
+.orbit-2 { transform: scale(0.7); animation-duration: 70s; animation-direction: reverse; border-style: dotted; }
+.orbit-3 { transform: scale(1); animation-duration: 100s; }
+
+@keyframes spin { 
+    from { transform: rotate(0deg); } 
+    to { transform: rotate(360deg); } 
+}
+
+/* --- 2. THE 3D GLOBE --- */
+.globe-container { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 700px; 
+    height: 700px; 
+    transform: translate(-50%, -50%); 
+    perspective: 1200px; 
+    z-index: 2; 
+    pointer-events: none; 
+    opacity: 0.12; 
+}
+.globe { 
+    width: 100%; 
+    height: 100%; 
+    position: relative; 
+    transform-style: preserve-3d; 
+    animation: rotateGlobe 45s linear infinite; 
+}
+.globe-ring { 
+    position: absolute; 
+    inset: 50px; 
+    border: 1px solid rgba(255, 255, 255, 0.8); 
+    border-radius: 50%; 
+}
+.ring-g1 { transform: rotateY(0deg); }
+.ring-g2 { transform: rotateY(60deg); }
+.ring-g3 { transform: rotateY(120deg); }
+.ring-g4 { transform: rotateX(90deg); border-style: dashed; }
+
+@keyframes rotateGlobe { 
+    0% { transform: rotateX(20deg) rotateY(0deg); } 
+    100% { transform: rotateX(20deg) rotateY(360deg); } 
+}
+
+/* --- 3. GLOWING DOTS & NETWORK --- */
+.connection-network { 
+    position: absolute; 
+    inset: 0; 
+    z-index: 2; 
+    pointer-events: none; 
+    opacity: 0.3; 
+}
+.node-pulse { 
+    position: absolute; 
+    width: 6px; 
+    height: 6px; 
+    background: #FFFFFF; 
+    border-radius: 50%; 
+    box-shadow: 0 0 15px 3px rgba(255, 255, 255, 0.6); 
+    animation: pulse 3s ease-in-out infinite alternate; 
+    z-index: 3; 
+}
+
+@keyframes pulse { 
+    0% { transform: scale(0.8); opacity: 0.3; } 
+    100% { transform: scale(1.5); opacity: 0.9; } 
+}
+
+/* --- 4. DIAGONAL LIGHTNING & ORIENTED PLANES --- */
+.flight-path { 
+    position: absolute; 
+    z-index: 3; 
+    pointer-events: none; 
+    display: flex; 
+    align-items: center; 
+}
+.light-streak { 
+    height: 1px; 
+    width: 300px; 
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), rgba(255,255,255,0.9)); 
+    margin-right: 4px; 
+}
+.flight-1 { 
+    bottom: -10%; 
+    left: -20%; 
+    transform: rotate(-35deg); 
+    animation: flyDiagonalUp 18s linear infinite; 
+}
+.flight-2 { 
+    top: -10%; 
+    left: -20%; 
+    transform: rotate(25deg); 
+    animation: flyDiagonalDown 24s linear infinite; 
+    animation-delay: 6s; 
+    opacity: 0.6; 
+}
+.plane-svg { 
+    transform: rotate(45deg); 
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)); 
+}
+
+@keyframes flyDiagonalUp { 
+    0% { transform: rotate(-35deg) translateX(0); opacity: 0; } 
+    10% { opacity: 1; } 
+    90% { opacity: 1; } 
+    100% { transform: rotate(-35deg) translateX(150vw); opacity: 0; } 
+}
+
+@keyframes flyDiagonalDown { 
+    0% { transform: rotate(25deg) translateX(0); opacity: 0; } 
+    10% { opacity: 1; } 
+    90% { opacity: 1; } 
+    100% { transform: rotate(25deg) translateX(150vw); opacity: 0; } 
+}

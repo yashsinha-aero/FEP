@@ -1,0 +1,90 @@
+.landing-body {
+    background-color: #0b1120; 
+    color: #ffffff;
+    overflow-x: hidden;
+}
+
+.hero-bg {
+    background-color: #0b1120;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(192, 132, 252, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, #0b1120 0%, #172436 100%);
+}
+
+.text-glow-high {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 4px 15px rgba(0, 0, 0, 0.9);
+}
+
+.text-glow {
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0,0,0,1);
+}
+
+.text-shadow-md {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.7), 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-glow {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.vibrant-gradient-text {
+    background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.vibrant-card {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(16px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.neon-border-bottom {
+    position: relative;
+}
+.neon-border-bottom::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #38bdf8, #c084fc, transparent);
+    opacity: 0.5;
+}
+
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, visibility;
+}
+.fade-in-section.is-visible {
+    opacity: 1;
+    transform: none;
+}
+
+@keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.ticker-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.ticker-move {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+}
+.ticker-move:hover {
+    animation-play-state: paused;
+}
