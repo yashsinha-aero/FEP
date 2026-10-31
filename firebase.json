@@ -57,7 +57,7 @@
           },
           {
             "key": "Content-Security-Policy",
-            "value": "default-src 'self'; script-src 'self' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://us-central1-fep-iitk.cloudfunctions.net https://*.googleapis.com https://*.firebaseapp.com https://*.firebase.com wss://*.firebaseio.com http://localhost:* ws://localhost:*; img-src 'self' data: blob: https://firebasestorage.googleapis.com; frame-src 'self'; frame-ancestors 'self'; object-src 'none';"
+            "value": "default-src 'self'; script-src 'self' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://us-central1-fep-iitk.cloudfunctions.net https://*.googleapis.com https://*.firebaseapp.com https://*.firebase.com wss://*.firebaseio.com http://localhost:* ws://localhost:*; img-src 'self' data: blob: https://firebasestorage.googleapis.com; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
           },
           {
             "key": "X-Content-Type-Options",

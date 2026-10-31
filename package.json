@@ -25,6 +25,7 @@
     "server:dev": "node --watch server/index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:security": "npm --prefix server run test:security",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

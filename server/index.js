@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
+const securityHeaders = require("../functions/securityHeaders");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const { db } = require("./db");
@@ -16,6 +17,9 @@ const adminRoutes = require("./routes/admin");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+
+// Apply before CORS, body parsing and routes, including early/error responses.
+app.use(securityHeaders);
 
 // CORS setup: allow local dev on ports 3000, 3001 and incoming origins
 app.use(
@@ -102,9 +106,9 @@ app.use((err, req, res, next) => {
 });
 
 seedInitialAdmin().then(() => {
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`=======================================================`);
-    console.log(`  FEP IITK Server running on http://localhost:${PORT}`);
+    console.log(`  FEP IITK Server running on http://localhost:${server.address().port}`);
     console.log(`  Database: SQLite (server/data/fep.db)`);
     console.log(`  Uploads: server/uploads/`);
     console.log(`=======================================================`);

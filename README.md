@@ -3,6 +3,10 @@
 Local React frontend and Express/SQLite backend for the Foreign Exposure
 Programme portal.
 
+Security fixes for the first batch of medium and high findings in `NERVE.pdf`,
+including validation and deployment instructions, are documented in
+[docs/security-remediation.md](docs/security-remediation.md).
+
 ## Run locally
 
 ### Prerequisites
