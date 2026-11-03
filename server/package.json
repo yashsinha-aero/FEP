@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
-    "test": "node scripts/test_integration.js"
+    "test": "node scripts/test_integration.js",
+    "test:security": "node --test tests/securityHeaders.test.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

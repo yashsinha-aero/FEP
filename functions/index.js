@@ -6,6 +6,7 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
+const securityHeaders = require("./securityHeaders");
 
 const serviceAccountPath = path.join(__dirname, "serviceAccountKey.json");
 if (fs.existsSync(serviceAccountPath)) {
@@ -45,6 +46,8 @@ const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
 const app = express();
+// Hosting headers do not cover requests made directly to this function.
+app.use(securityHeaders);
 app.use(
   cors({
     origin: true,
