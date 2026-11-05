@@ -92,7 +92,14 @@ app.get("/api/health", (req, res) => {
 // Serve frontend static build if running in production mode
 const buildPath = path.join(__dirname, "..", "build");
 if (fs.existsSync(buildPath)) {
+  // Support serving from /fep subpath (matching CRA homepage: "/fep") as well as root
+  app.use("/fep", express.static(buildPath));
   app.use(express.static(buildPath));
+
+  // Redirect root / to /fep
+  app.get("/", (req, res) => res.redirect("/fep"));
+
+  // SPA fallback for all frontend routes
   app.get("*", (req, res, next) => {
     if (req.url.startsWith("/api/")) return next();
     res.sendFile(path.join(buildPath, "index.html"));
