@@ -1,6 +1,6 @@
-# NERVE remediation: first batch
+# NERVE remediation
 
-This batch addresses the browser response-header findings from the NERVE scan
+These changes address the browser response-header findings from the NERVE scan
 of `iriitk.com` dated 30 June 2026. The report predates these changes; it is not
 evidence of the current deployment's state.
 
@@ -8,14 +8,18 @@ evidence of the current deployment's state.
 
 | Severity | Report finding | Protection |
 | --- | --- | --- |
+| Critical | Missing Strict-Transport-Security | HTTPS backend responses now send the existing Hosting HSTS policy: `max-age=31536000; includeSubDomains; preload`. |
 | High | Missing Content-Security-Policy | An enforcing CSP restricts scripts, resources, embedding, base URLs and form submissions. |
 | High | Missing X-Content-Type-Options | `nosniff` prevents browsers from guessing a different content type. |
 | High | Missing X-Frame-Options | `SAMEORIGIN` limits embedding to the same origin. |
 | High | Clickjacking Protection Missing | Both `X-Frame-Options` and CSP `frame-ancestors 'self'` protect against cross-origin embedding. |
 | Medium | Missing Referrer-Policy | `strict-origin-when-cross-origin` omits paths and query strings from cross-origin referrers and omits referrers on HTTPS-to-HTTP requests. |
+| Low | Missing Permissions-Policy | `camera=(), microphone=(), geolocation=()` restricts features the portal does not use. |
 
-`firebase.json` already declared these headers before this batch. The Express
-backend and Cloud Function did not send them. Both now use the shared middleware
+`firebase.json` already declared all six headers before the first batch. The
+first batch added CSP, MIME, frame and referrer headers to the backends. The
+second batch adds HTTPS-only HSTS and Permissions-Policy to both backends.
+Both use the shared middleware
 in `functions/securityHeaders.js`, installed before CORS and body parsing so early
 responses also receive the headers. The module lives inside `functions/` so that
 Firebase includes it in function deployments. The Hosting and middleware CSPs
@@ -28,6 +32,34 @@ Existing Tailwind CDN scripts, Google Fonts, React inline styles, image previews
 Firebase endpoints and localhost development connections remain allowed. Inline
 scripts and `eval` remain blocked. This CSP reduces exposure but does not replace
 input validation or prevent every form of XSS.
+
+## HTTPS and reverse proxies
+
+HSTS is emitted only when Express recognizes the request as HTTPS, including
+HTTPS terminated by a trusted reverse proxy. Plain HTTP development responses
+omit HSTS; the other security headers still apply. See the
+[HSTS transport requirements](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security#description).
+
+Both backends trust loopback reverse proxies by default. In the managed Cloud Run
+runtime (`K_SERVICE` is present), they trust the immediate ingress proxy instead.
+For other deployments, set `TRUST_PROXY` to the actual trusted proxy IP addresses
+or CIDRs, for example `loopback, 10.20.30.40/32`. The public HTTPS proxy must
+overwrite client-supplied `X-Forwarded-Proto`, `X-Forwarded-Host` and
+`X-Forwarded-For` headers. Trust only the proxies actually in use; see
+[Express proxy configuration](https://expressjs.com/en/guide/behind-proxies/).
+
+The existing Firebase `includeSubDomains` and `preload` directives are reused.
+This patch does not submit the domain to a browser preload list.
+
+## Public endpoint observation
+
+On 3 November 2026, read-only HTTPS HEAD requests to `https://iriitk.com/` (301)
+and `https://iriitk.com/fep/login` (200) already returned HSTS and
+Permissions-Policy, as well as the four other headers. The June report's missing
+headers were not reproduced on these two current responses. This observation
+predates deployment of the second batch: these changes close the backend
+coverage gap rather than establish that the public site previously lacked HSTS.
+A full NERVE rescan and deployed API checks are still needed to update the report.
 
 ## Validation
 
@@ -45,7 +77,13 @@ preflights. They also exercise the shared middleware using the Cloud Function's
 CORS settings and check parity with Firebase Hosting. They do not contact Firebase
 or a production database, and do not invoke the complete Cloud Function.
 
-Validation in this checkout: all 11 security tests passed on Node.js 22.22.2.
+The second batch extends the suite to cover HSTS on trusted HTTPS proxy requests,
+HTML, JavaScript, authentication errors, missing routes, JSON parse failures and
+CORS preflights. Plain HTTP and spoofed protocol headers from untrusted clients
+are checked to ensure that they do not enable HSTS. Permissions-Policy is checked
+on all existing response cases, with Hosting parity for both new headers.
+
+Validation in this checkout: all 17 security tests passed on Node.js 22.22.2.
 The new middleware also passes the standalone Functions ESLint configuration.
 The complete `functions` lint command is blocked: it inherits the root
 `react-app` configuration, whose frontend dependencies were not installed for
@@ -74,7 +112,7 @@ curl -sS -L -D - -o /dev/null https://iriitk.com/fep/login
 ```
 
 Also inspect a real built JavaScript or CSS URL and the deployed API URL. Confirm
-the four headers in the table are present on the final responses; CSP must be
+all six headers in the table are present on the final HTTPS responses; CSP must be
 `Content-Security-Policy`, not just `Content-Security-Policy-Report-Only`. Smoke-test
 login, forms, fonts and file previews in a browser for CSP violations. If a proxy
 or CDN serves a different root application or replaces headers, its configuration
@@ -89,6 +127,7 @@ hosting changes and are deferred. Use the mail provider's actual DKIM values and
 validate legitimate senders before changing DMARC enforcement. The certificate
 expiry in the June report is historical and needs a fresh check.
 
-The critical HSTS and low severity findings are outside this batch. The existing
-Firebase HSTS and Permissions-Policy declarations are unchanged; this patch does
-not establish whether the public domain is serving them.
+The low reverse-DNS and SMTP DANE/TLSA findings remain provider-managed work.
+The existing Firebase HSTS and Permissions-Policy declarations are unchanged;
+the second batch adds equivalent coverage to the backends. Public endpoint
+observations above cover only the requests explicitly checked.

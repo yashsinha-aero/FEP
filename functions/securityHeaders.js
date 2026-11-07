@@ -22,7 +22,13 @@ const securityHeaders = (req, res, next) => {
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "SAMEORIGIN",
     "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
   });
+  // req.secure includes HTTPS reported by a configured, trusted reverse proxy.
+  // HSTS must be sent over HTTPS only; local HTTP development stays unchanged.
+  if (req.secure) {
+    res.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  }
   next();
 };
 

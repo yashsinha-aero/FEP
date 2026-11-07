@@ -15,6 +15,7 @@ const expectedHeaders = {
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "SAMEORIGIN",
   "Referrer-Policy": "strict-origin-when-cross-origin",
+  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
 };
 const hostingHeaders = Object.fromEntries(
   hosting.headers.find((rule) => rule.source === "**").headers.map(
@@ -29,10 +30,15 @@ let baseUrl;
 let functionServer;
 let functionUrl;
 
-function assertHeaders(response) {
+function assertHeaders(response, { secure = false } = {}) {
   for (const [name, value] of Object.entries(expectedHeaders)) {
     assert.equal(response.headers.get(name), value, name);
   }
+  assert.equal(
+    response.headers.get("Strict-Transport-Security"),
+    secure ? hostingHeaders["Strict-Transport-Security"] : null,
+    "HSTS is sent on HTTPS responses only"
+  );
   const csp = response.headers.get("Content-Security-Policy");
   assert.ok(csp, "An enforcing CSP must be present");
   assert.equal(response.headers.get("Content-Security-Policy-Report-Only"), null);
@@ -66,6 +72,7 @@ before(async () => {
     env: {
       ...process.env,
       NODE_ENV: "test",
+      TRUST_PROXY: "loopback",
       PORT: "0",
       JWT_SECRET: randomBytes(32).toString("hex"),
       INITIAL_ADMIN_EMAIL: "security-test@example.invalid",
@@ -93,6 +100,7 @@ before(async () => {
 
   // Exercise the deployable middleware with the Cloud Function's CORS options.
   const functionApp = express();
+  functionApp.set("trust proxy", "loopback");
   functionApp.use(securityHeaders);
   functionApp.use(cors({
     origin: true,
@@ -117,6 +125,7 @@ test("Firebase Hosting and backend policies protect scripts, forms and framing",
   for (const [name, value] of Object.entries(expectedHeaders)) {
     assert.equal(hostingHeaders[name], value);
   }
+  assert.equal(hostingHeaders["Strict-Transport-Security"], "max-age=31536000; includeSubDomains; preload");
   const directives = Object.fromEntries(
     hostingHeaders["Content-Security-Policy"].split(";").filter((item) => item.trim()).map((item) => {
       const [name, ...sources] = item.trim().split(/\s+/);
@@ -181,6 +190,76 @@ for (const target of ["backend", "function middleware"]) {
 
 test("deployable function middleware sends the same enforcing headers", async () => {
   const response = await fetch(functionUrl);
+  assert.equal(response.status, 200);
+  assertHeaders(response);
+  await response.arrayBuffer();
+});
+
+test("backend sends HSTS through a trusted HTTPS proxy on pages, assets and errors", async () => {
+  for (const [route, status] of [
+    ["/api/health", 200],
+    ["/fep/dashboard", 200],
+    ["/app.js", 200],
+    ["/api/auth/me", 401],
+    ["/api/not-a-route", 404],
+  ]) {
+    const response = await fetch(`${baseUrl}${route}`, {
+      headers: { "X-Forwarded-Proto": "https" },
+    });
+    assert.equal(response.status, status);
+    assertHeaders(response, { secure: true });
+    await response.arrayBuffer();
+  }
+});
+
+for (const target of ["backend", "function middleware"]) {
+  test(`${target} retains HSTS on HTTPS CORS preflights`, async () => {
+    const url = target === "backend" ? `${baseUrl}/api/login` : functionUrl;
+    const response = await fetch(url, {
+      method: "OPTIONS",
+      headers: {
+        Origin: "https://iriitk.com",
+        "X-Forwarded-Proto": "https",
+        "Access-Control-Request-Method": "POST",
+        "Access-Control-Request-Headers": "authorization,content-type",
+      },
+    });
+    assert.equal(response.status, 204);
+    assertHeaders(response, { secure: true });
+  });
+}
+
+test("backend retains HSTS when HTTPS JSON parsing fails", async () => {
+  const response = await fetch(`${baseUrl}/api/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "X-Forwarded-Proto": "https" },
+    body: "{",
+  });
+  assert.ok(response.status >= 400);
+  assertHeaders(response, { secure: true });
+  await response.arrayBuffer();
+});
+
+test("deployable function middleware sends HSTS on trusted HTTPS requests", async () => {
+  const response = await fetch(functionUrl, {
+    headers: { "X-Forwarded-Proto": "https" },
+  });
+  assert.equal(response.status, 200);
+  assertHeaders(response, { secure: true });
+  await response.arrayBuffer();
+});
+
+test("an untrusted client cannot enable HSTS by spoofing the forwarded protocol", async (t) => {
+  const untrustedApp = express();
+  untrustedApp.set("trust proxy", false);
+  untrustedApp.use(securityHeaders);
+  untrustedApp.get("/", (req, res) => res.json({ status: "ok" }));
+  const untrustedServer = untrustedApp.listen(0, "127.0.0.1");
+  t.after(() => new Promise((resolve) => untrustedServer.close(resolve)));
+  await once(untrustedServer, "listening");
+  const response = await fetch(`http://127.0.0.1:${untrustedServer.address().port}`, {
+    headers: { "X-Forwarded-Proto": "https" },
+  });
   assert.equal(response.status, 200);
   assertHeaders(response);
   await response.arrayBuffer();

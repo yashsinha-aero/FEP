@@ -16,6 +16,9 @@ const uploadRoutes = require("./routes/uploads");
 const adminRoutes = require("./routes/admin");
 
 const app = express();
+// Cloud Run terminates TLS before the container. Elsewhere, trust only loopback
+// proxies by default; TRUST_PROXY can name the deployment's proxy IPs/CIDRs.
+app.set("trust proxy", process.env.TRUST_PROXY || (process.env.K_SERVICE ? 1 : "loopback"));
 const PORT = process.env.PORT || 5001;
 
 // Apply before CORS, body parsing and routes, including early/error responses.

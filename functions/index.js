@@ -46,6 +46,8 @@ const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
 const app = express();
+// Recognize HTTPS from the managed Cloud Run ingress, or a local reverse proxy.
+app.set("trust proxy", process.env.TRUST_PROXY || (process.env.K_SERVICE ? 1 : "loopback"));
 // Hosting headers do not cover requests made directly to this function.
 app.use(securityHeaders);
 app.use(
